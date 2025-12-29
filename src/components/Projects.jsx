@@ -59,6 +59,14 @@ const projectsData = [
         gradient: "linear-gradient(135deg, #F4B4A4 0%, #CD8B76 100%)",
         icon: "🚀",
         githubLink: "https://github.com/Laksh-Devloper/Chintu---Discord-Entertainment-and-Memes-Bot-Chatbot-made-with-discord.py--"
+    },
+    {
+        title: "InsightFlow---Data-to-Actionable-Insights",
+        description: "Transform Data into Wisdom - InsightFlow is a full-stack intelligent data analysis platform that converts raw datasets into actionable insights through automated cleaning, interactive visualizations, and AI-powered analysis.",
+        tech: ["Python", "React", "Flask", "Plotly" , "Pandas" , "Numpy" , "Matplotlib" , "scikit-learn"] ,
+        gradient: "linear-gradient(135deg, #F4B4A4 0%, #CD8B76 100%)",
+        icon: "🚀",
+        githubLink: "https://github.com/Laksh-Devloper/Chintu---Discord-Entertainment-and-Memes-Bot-Chatbot-made-with-discord.py--"
     }
 
 ];
