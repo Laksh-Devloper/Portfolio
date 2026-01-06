@@ -5,12 +5,12 @@ import './Projects.css';
 
 const projectsData = [
     {
-        title: "Case Companion",
-        description: "AI-powered legal assistant that helps users navigate legal complexities with intelligent recommendations and case analysis.",
-        tech: ["Django", "HTML/CSS/JS", "Gemini API"],
-        gradient: "linear-gradient(135deg, #CD8B76 0%, #F4B4A4 100%)",
-        icon: "⚖️",
-        githubLink: "https://github.com/Laksh-Devloper/Case-Companion"
+        title: "ZeroAnalyst - Agentic Ai Data Analyst",
+        description: "ZeroAnalyst is an AI-powered data analysis platform that lets you chat with your data in natural language. No coding, no analysts, no waiting—just upload your CSV/Excel file and start asking questions.",
+        tech: ["Agentic AI", "Gemini", "Python", "React", "FastAPI", "Plotly", "Pandas", "Numpy", "Matplotlib", "scikit-learn"],
+        gradient: "linear-gradient(135deg, #F4B4A4 0%, #CD8B76 100%)",
+        icon: "🚀",
+        githubLink: "https://github.com/Laksh-Devloper/ZeroAnalyst---Agentic-AI-Data-Analyst"
     },
     {
         title: "Curo",
@@ -21,14 +21,6 @@ const projectsData = [
         githubLink: "https://github.com/Laksh-Devloper/Curaid"
     },
     {
-        title: "Disease Prediction System",
-        description: "High-accuracy ML model predicting Diabetes, Heart Disease & Parkinson's with 90%+ accuracy using advanced algorithms.",
-        tech: ["Scikit-learn", "Pandas", "NumPy"],
-        gradient: "linear-gradient(135deg, #6B4423 0%, #8D5B4C 100%)",
-        icon: "🧬",
-        githubLink: "https://github.com/Laksh-Devloper/Disease-Prediction-System-"
-    },
-    {
         title: "Cute 3D Room Portfolio",
         description: "Cute 3D Room Portfolio built using Three.js + Vite ,It’s an interactive, playful, room portfolio inspired by modern 3D web experiences and customized with my own assets, models, and tweaks",
         tech: ["Three.js", "Vite", "HTML/CSS/JS", "Blender"],
@@ -37,13 +29,22 @@ const projectsData = [
         githubLink: "https://github.com/Laksh-Devloper/Cute-3d-Room-Portfolio-using-Three.JS"
     },
     {
-        title: "FOUNDRY-AI",
-        description: "AI-powered startup toolkit that generates creative names, professional logos, and complete website designs for new ventures.",
-        tech: ["Gemini API", "FLUX", "Streamlit", "Netlify"],
+        title: "InsightFlow---Data-to-Actionable-Insights",
+        description: "Transform Data into Wisdom - InsightFlow is a full-stack intelligent data analysis platform that converts raw datasets into actionable insights through automated cleaning, interactive visualizations, and AI-powered analysis.",
+        tech: ["Python", "React", "Flask", "Plotly", "Pandas", "Numpy", "Matplotlib", "scikit-learn"],
         gradient: "linear-gradient(135deg, #F4B4A4 0%, #CD8B76 100%)",
         icon: "🚀",
-        githubLink: "https://github.com/Laksh-Devloper/Ai-Startup-Name-Logo-Website-Generator-"
+        githubLink: "https://github.com/Laksh-Devloper/InsightFlow---Data-to-Actionable-Insights"
     },
+    {
+        title: "Disease Prediction System",
+        description: "High-accuracy ML model predicting Diabetes, Heart Disease & Parkinson's with 90%+ accuracy using advanced algorithms.",
+        tech: ["Scikit-learn", "Pandas", "NumPy"],
+        gradient: "linear-gradient(135deg, #6B4423 0%, #8D5B4C 100%)",
+        icon: "🧬",
+        githubLink: "https://github.com/Laksh-Devloper/Disease-Prediction-System-"
+    },
+
     {
         title: "Interview-Prep AI",
         description: "Analyse your resume with one on one session with the ai , Job description tailored rinterview also available",
@@ -61,13 +62,16 @@ const projectsData = [
         githubLink: "https://github.com/Laksh-Devloper/Chintu---Discord-Entertainment-and-Memes-Bot-Chatbot-made-with-discord.py--"
     },
     {
-        title: "InsightFlow---Data-to-Actionable-Insights",
-        description: "Transform Data into Wisdom - InsightFlow is a full-stack intelligent data analysis platform that converts raw datasets into actionable insights through automated cleaning, interactive visualizations, and AI-powered analysis.",
-        tech: ["Python", "React", "Flask", "Plotly", "Pandas", "Numpy", "Matplotlib", "scikit-learn"],
-        gradient: "linear-gradient(135deg, #F4B4A4 0%, #CD8B76 100%)",
-        icon: "🚀",
-        githubLink: "https://github.com/Laksh-Devloper/InsightFlow---Data-to-Actionable-Insights"
-    }
+
+
+        title: "Case Companion",
+        description: "AI-powered legal assistant that helps users navigate legal complexities with intelligent recommendations and case analysis.",
+        tech: ["Django", "HTML/CSS/JS", "Gemini API"],
+        gradient: "linear-gradient(135deg, #CD8B76 0%, #F4B4A4 100%)",
+        icon: "⚖️",
+        githubLink: "https://github.com/Laksh-Devloper/Case-Companion"
+    },
+
 
 ];
 
