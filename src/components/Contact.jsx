@@ -28,7 +28,7 @@ const socialLinks = [
     {
         name: "Resume",
         username: "View PDF",
-        url: "https://drive.google.com/file/d/15bRaYuTP2TL2QyVFSgN4aW6Iv_h_N3Wr/view?usp=sharing",
+        url: "https://drive.google.com/file/d/1rat3f24Nprj8j1PSeoRL6DIKw27qA3Uo/view?usp=sharing",
         icon: "📄",
         color: "#F5E6D3",
         download: false
@@ -107,7 +107,7 @@ export default function Contact() {
                             <a href="mailto:lakshybhawsar1722@gmail.com" className="btn btn-primary">
                                 Contact Me
                             </a>
-                            <a href="https://drive.google.com/file/d/15bRaYuTP2TL2QyVFSgN4aW6Iv_h_N3Wr/view?usp=sharing" className="btn btn-secondary" target="_blank" rel="noopener noreferrer">
+                            <a href="https://drive.google.com/file/d/1rat3f24Nprj8j1PSeoRL6DIKw27qA3Uo/view?usp=sharing" className="btn btn-secondary" target="_blank" rel="noopener noreferrer">
                                 View Resume
                             </a>
                         </div>
