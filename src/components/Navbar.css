@@ -31,6 +31,29 @@
   color: var(--text-primary);
 }
 
+.music-btn {
+  background: transparent;
+  color: var(--text-secondary);
+  border: 1px solid var(--outline);
+  padding: 4px 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+}
+
+.music-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: var(--text-primary);
+  border-color: var(--text-primary);
+}
+
+.music-btn.active {
+  color: var(--accent-primary);
+  border-color: var(--accent-primary);
+  background: rgba(255, 179, 0, 0.1);
+}
+
 /* Tabs */
 .nav-tabs {
   list-style: none;
