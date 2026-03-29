@@ -1,103 +1,148 @@
-import { useRef } from 'react';
+import { useRef, useMemo } from 'react';
 import { Canvas, useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
-// Minimal Floating Ring - Apple Style
-function FloatingRing({ position, radius, color, speed }) {
-    const ringRef = useRef();
+// ── Battlefield Embers (Rising Fire Particles) ──
+function Embers({ count = 2000 }) {
+  const mesh = useRef();
+  const dummy = new THREE.Object3D();
 
-    useFrame((state) => {
-        const time = state.clock.elapsedTime;
+  const particles = useMemo(() => {
+    const temp = [];
+    for (let i = 0; i < count; i++) {
+        const x = (Math.random() - 0.5) * 40;
+        const y = (Math.random() - 0.5) * 20 - 10;
+        const z = (Math.random() - 0.5) * 40;
+        
+        // Random drift and rise speed
+        temp.push({ 
+            x, y, z, 
+            speed: Math.random() * 0.05 + 0.02,
+            driftX: (Math.random() - 0.5) * 0.02,
+            driftZ: (Math.random() - 0.5) * 0.02,
+            scale: Math.random() * 0.5 + 0.5
+        });
+    }
+    return temp;
+  }, [count]);
 
-        // Gentle floating
-        ringRef.current.position.y = position[1] + Math.sin(time * speed) * 0.3;
+  useFrame((state) => {
+    const time = state.clock.getElapsedTime();
+    
+    particles.forEach((particle, i) => {
+      // Particles rise up like floating embers in a fire
+      particle.y += particle.speed;
+      particle.x += Math.sin(time + i) * particle.driftX;
+      particle.z += Math.cos(time + i) * particle.driftZ;
+      
+      // Reset if they go too high
+      if (particle.y > 10) {
+        particle.y = -10;
+      }
 
-        // Slow rotation
-        ringRef.current.rotation.x = time * 0.1;
-        ringRef.current.rotation.y = time * 0.15;
+      dummy.position.set(particle.x, particle.y, particle.z);
+      
+      // Pulsing scale based on time and index for flickering effect
+      const currentScale = particle.scale * (Math.sin(time * 3 + i) * 0.2 + 0.8);
+      dummy.scale.setScalar(currentScale);
+      
+      dummy.updateMatrix();
+      mesh.current.setMatrixAt(i, dummy.matrix);
     });
+    mesh.current.instanceMatrix.needsUpdate = true;
+  });
 
-    return (
-        <mesh ref={ringRef} position={position}>
-            <torusGeometry args={[radius, 0.05, 16, 100]} />
-            <meshStandardMaterial
-                color={color}
-                metalness={0.8}
-                roughness={0.2}
-                transparent
-                opacity={0.4}
-            />
-        </mesh>
-    );
+  return (
+    <instancedMesh ref={mesh} args={[null, null, count]}>
+      <planeGeometry args={[0.08, 0.08]} />
+      {/* Intense glowing fire color */}
+      <meshBasicMaterial color="#ff5500" transparent opacity={0.8} blending={THREE.AdditiveBlending} depthWrite={false} side={THREE.DoubleSide} />
+    </instancedMesh>
+  );
 }
 
-// Minimal Sphere - Subtle and Clean
-function MinimalSphere({ position, scale, color }) {
-    const sphereRef = useRef();
-
+// ── Smoke Particles (Slow floating dark clouds) ──
+function Smoke({ count = 100 }) {
+    const mesh = useRef();
+    const dummy = new THREE.Object3D();
+  
+    const particles = useMemo(() => {
+      const temp = [];
+      for (let i = 0; i < count; i++) {
+          const x = (Math.random() - 0.5) * 50;
+          const y = (Math.random() - 0.5) * 30;
+          const z = (Math.random() - 0.5) * 20 - 5;
+          temp.push({ x, y, z, rotOffset: Math.random() * Math.PI, speed: Math.random() * 0.005 + 0.001 });
+      }
+      return temp;
+    }, [count]);
+  
     useFrame((state) => {
-        const time = state.clock.elapsedTime;
-
-        // Very subtle movement
-        sphereRef.current.position.y = position[1] + Math.sin(time * 0.4) * 0.2;
-        sphereRef.current.position.x = position[0] + Math.cos(time * 0.3) * 0.15;
+      particles.forEach((particle, i) => {
+        particle.x += particle.speed;
+        if (particle.x > 25) particle.x = -25;
+        
+        dummy.position.set(particle.x, particle.y, particle.z);
+        dummy.rotation.z = particle.rotOffset + state.clock.getElapsedTime() * 0.1;
+        dummy.scale.setScalar(10);
+        dummy.updateMatrix();
+        mesh.current.setMatrixAt(i, dummy.matrix);
+      });
+      mesh.current.instanceMatrix.needsUpdate = true;
     });
-
+  
     return (
-        <mesh ref={sphereRef} position={position} scale={scale}>
-            <sphereGeometry args={[1, 64, 64]} />
-            <meshStandardMaterial
-                color={color}
-                metalness={0.3}
-                roughness={0.7}
-                transparent
-                opacity={0.25}
-            />
-        </mesh>
+      <instancedMesh ref={mesh} args={[null, null, count]}>
+        <planeGeometry args={[1, 1]} />
+        <meshBasicMaterial color="#1a1c20" transparent opacity={0.1} depthWrite={false} />
+      </instancedMesh>
     );
+  }
+
+// ── Distant Artillery Flashes ──
+function ArtilleryFlashes() {
+  const flash1 = useRef();
+  const flash2 = useRef();
+
+  useFrame((state) => {
+    const time = state.clock.getElapsedTime();
+    // Simulate chaotic gunfire/explosions
+    flash1.current.intensity = Math.pow(Math.sin(time * 12 + Math.sin(time * 3)), 8) * 5;
+    flash2.current.intensity = Math.pow(Math.cos(time * 8 + Math.cos(time * 5)), 6) * 4;
+  });
+
+  return (
+    <group>
+      <pointLight ref={flash1} position={[-15, -5, -10]} color="#ffaa00" distance={30} decay={2} />
+      <pointLight ref={flash2} position={[20, -2, -15]} color="#ff3300" distance={40} decay={2} />
+    </group>
+  );
 }
 
-// Ambient Light Orb - Very Subtle
-function AmbientOrb({ position, color, intensity }) {
-    return (
-        <mesh position={position}>
-            <sphereGeometry args={[3, 32, 32]} />
-            <meshBasicMaterial
-                color={color}
-                transparent
-                opacity={intensity}
-            />
-        </mesh>
-    );
-}
-
-// Main Scene - Apple Minimalist Style
 export default function Scene3D() {
-    return (
-        <div className="canvas-container">
-            <Canvas
-                camera={{ position: [0, 0, 8], fov: 50 }}
-                gl={{ alpha: true, antialias: true }}
-            >
-                {/* Soft Lighting - Apple Style */}
-                <ambientLight intensity={0.3} />
-                <directionalLight position={[5, 5, 5]} intensity={0.4} color="#F4B4A4" />
-                <directionalLight position={[-5, -5, -5]} intensity={0.2} color="#CD8B76" />
-
-                {/* Large Ambient Orbs - Very Subtle Background */}
-                <AmbientOrb position={[-8, 4, -20]} color="#F4B4A4" intensity={0.08} />
-                <AmbientOrb position={[10, -3, -25]} color="#CD8B76" intensity={0.06} />
-                <AmbientOrb position={[0, 8, -22]} color="#F5E6D3" intensity={0.05} />
-
-                {/* Minimal Floating Rings */}
-                <FloatingRing position={[-3, 2, -5]} radius={1.5} color="#CD8B76" speed={0.5} />
-                <FloatingRing position={[4, -1, -7]} radius={1.2} color="#F4B4A4" speed={0.6} />
-
-                {/* Subtle Spheres */}
-                <MinimalSphere position={[-5, 1, -8]} scale={1.5} color="#F4B4A4" />
-                <MinimalSphere position={[6, 2, -10]} scale={1.2} color="#CD8B76" />
-                <MinimalSphere position={[0, -2, -6]} scale={1} color="#F5E6D3" />
-            </Canvas>
-        </div>
-    );
+  return (
+    <div className="canvas-container" style={{ opacity: 0.6 }}>
+      <Canvas
+        camera={{ position: [0, 0, 5], fov: 60 }}
+        gl={{ antialias: true, alpha: true }}
+      >
+        {/* Dense heavy battle fog */}
+        <fog attach="fog" args={['#0a0b0d', 2, 25]} />
+        
+        <ambientLight intensity={0.1} />
+        
+        <ArtilleryFlashes />
+        <Smoke count={150} />
+        <Embers count={2500} />
+      </Canvas>
+      
+      {/* Vignette & Grime Overlay */}
+      <div style={{
+        position: 'absolute',
+        top: 0, left: 0, width: '100%', height: '100%',
+        background: 'radial-gradient(circle at 50% 50%, transparent 20%, #0a0b0d 95%)',
+        pointerEvents: 'none'
+      }} />
+    </div>
+  );
 }

@@ -25,7 +25,7 @@ main {
 .loading-spinner {
   width: 50px;
   height: 50px;
-  border: 3px solid var(--glass-border);
+  border: 2px solid var(--glass-border);
   border-top-color: var(--accent-primary);
   border-radius: 50%;
   animation: spin 1s linear infinite;
@@ -37,7 +37,7 @@ main {
   }
 }
 
-/* Smooth Scroll - Handled by Lenis */
+/* Smooth Scroll — Lenis */
 html.lenis,
 html.lenis body {
   height: auto;
@@ -59,13 +59,19 @@ html.lenis body {
   pointer-events: none;
 }
 
-/* Selection */
+/* Selection — Violet accent */
 ::selection {
   background: var(--accent-primary);
   color: white;
 }
 
 ::-moz-selection {
+  background: var(--accent-primary);
+  color: white;
+}
+
+/* Pink theme selection */
+[data-theme="pink"] ::selection {
   background: var(--accent-primary);
   color: white;
 }

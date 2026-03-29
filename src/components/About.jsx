@@ -7,75 +7,60 @@ export default function About() {
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.15,
-            },
-        },
-    };
-
-    const itemVariants = {
-        hidden: { opacity: 0, y: 30 },
-        visible: {
-            opacity: 1,
-            y: 0,
-            transition: {
-                duration: 0.6,
-                ease: [0.4, 0, 0.2, 1],
-            },
-        },
-    };
-
     return (
         <section className="about" id="about" ref={ref}>
             <div className="container">
-                <motion.div
-                    className="about-content"
-                    variants={containerVariants}
-                    initial="hidden"
-                    animate={isInView ? "visible" : "hidden"}
-                >
-                    <motion.div className="section-header" variants={itemVariants}>
-                        <span className="section-tag">Get to know me</span>
-                        <h2>About Me</h2>
-                    </motion.div>
+                <div className="dossier-layout">
+                    
+                    {/* Header Header */}
+                    <div className="sect-header">
+                        <span className="mono-text header-id">OP_LORE</span>
+                        <h2>BARRACKS // DOSSIER</h2>
+                    </div>
 
-                    <motion.div className="about-grid" variants={itemVariants}>
-                        <div className="about-text glass-card">
-                            <p>
-                                I'm passionate about building intelligent systems that solve real-world problems.
-                                My journey in Computer Science has been driven by curiosity and a desire to create
-                                meaningful impact through technology.
+                    {/* Content Tactical Grid */}
+                    <div className="dossier-grid">
+                        <motion.div 
+                            className="tactical-box text-log"
+                            initial={{ opacity: 0, x: -30 }}
+                            animate={isInView ? { opacity: 1, x: 0 } : {}}
+                            transition={{ duration: 0.6 }}
+                        >
+                            <span className="mono-text alert">[CLASSIFIED_RECORD]</span>
+                            <p className="lead-intel mt-4">
+                                OPERATIVE IS A HIGHLY TRAINED AI SPECIALIST AND FULL-STACK ARCHITECT DEPLOYED IN ENGINEERING COMPLEX SYSTEMS.
                             </p>
-                            <p>
-                                With expertise in <strong>AI, automation, and modern web development</strong>, I've built
-                                AI assistants, disease prediction models, and legal AI tools. I thrive on turning
-                                complex challenges into elegant, user-friendly solutions.
+                            <p className="mt-4">
+                                Known for executing robust machine learning operations and building scalable rapid-response front-end frameworks. The operative has completed intensive training in the B.Tech core logic sectors and continues to deploy mission-critical software solutions globally.
                             </p>
-                            <p>
-                                As a problem-solver at heart, I'm constantly exploring new technologies and pushing
-                                the boundaries of what's possible with code.
-                            </p>
-                        </div>
+                        </motion.div>
 
-                        <div className="education-cards">
-                            <motion.div className="glass-card education-card" variants={itemVariants}>
-                                <div className="card-icon">🎓</div>
-                                <h3>Bachelor of Technology</h3>
-                                <p className="degree">Computer Science</p>
-                            </motion.div>
+                        <motion.div 
+                            className="tactical-box intel-stats"
+                            initial={{ opacity: 0, x: 30 }}
+                            animate={isInView ? { opacity: 1, x: 0 } : {}}
+                            transition={{ duration: 0.6, delay: 0.3 }}
+                        >
+                            <div className="stat-row">
+                                <span className="mono-text label">CALLSIGN:</span>
+                                <span className="stat-value">LAKSHYA_B</span>
+                            </div>
+                            <div className="stat-row">
+                                <span className="mono-text label">SPECIALTY:</span>
+                                <span className="stat-value highlight">AI & NEURAL NETS</span>
+                            </div>
+                            <div className="stat-row">
+                                <span className="mono-text label">BASE_REQ:</span>
+                                <span className="stat-value">EARTH_HQ_INDIA</span>
+                            </div>
+                            <div className="stat-row">
+                                <span className="mono-text label">CLEARANCE:</span>
+                                <span className="stat-value danger">LEVEL_5_ADMIN</span>
+                            </div>
+                        </motion.div>
+                    </div>
 
-                            <motion.div className="glass-card education-card" variants={itemVariants}>
-                                <div className="card-icon">📚</div>
-                                <h3>Diploma</h3>
-                                <p className="degree">Computer Science & Engineering</p>
-                            </motion.div>
-                        </div>
-                    </motion.div>
-                </motion.div>
+                </div>
             </div>
         </section>
     );

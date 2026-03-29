@@ -1,103 +1,101 @@
-.about {
-    background: linear-gradient(180deg, var(--bg-primary) 0%, var(--bg-secondary) 100%);
+/* ═══════════════════════════════════════════════════
+   ABOUT — Tactical Dossier
+   ═══════════════════════════════════════════════════ */
+
+.dossier-layout {
+  padding: 4rem 0;
 }
 
-.section-header {
-    text-align: center;
-    margin-bottom: 4rem;
+.sect-header {
+  border-bottom: 2px solid var(--outline);
+  padding-bottom: 1rem;
+  margin-bottom: 4rem;
+  display: flex;
+  align-items: baseline;
+  gap: 2rem;
 }
 
-.section-tag {
-    display: inline-block;
-    padding: 6px 16px;
-    background: var(--glass-bg);
-    border: 1px solid var(--glass-border);
-    border-radius: 20px;
-    font-size: 0.85rem;
-    color: var(--accent-primary);
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    margin-bottom: 1rem;
-    font-weight: 600;
+.header-id {
+  color: var(--accent-primary);
+  font-size: 1.2rem;
+  font-weight: 700;
 }
 
-.section-header h2 {
-    background: linear-gradient(135deg, var(--text-primary), var(--text-secondary));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
+.sect-header h2 {
+  font-size: 3rem;
+  color: var(--text-primary);
 }
 
-.about-grid {
-    display: grid;
-    grid-template-columns: 1.2fr 1fr;
-    gap: 3rem;
-    align-items: start;
+.dossier-grid {
+  display: grid;
+  grid-template-columns: 1.5fr 1fr;
+  gap: 3rem;
 }
 
-.about-text {
-    padding: 3rem;
+/* ── Text Log ───────────────────────────────────────── */
+.text-log {
+  padding: 3rem;
 }
 
-.about-text p {
-    margin-bottom: 1.5rem;
+.alert {
+  color: var(--accent-danger);
+  border: 1px solid var(--accent-danger);
+  padding: 4px 8px;
+  background: rgba(147, 0, 10, 0.1);
 }
 
-.about-text p:last-child {
-    margin-bottom: 0;
+.mt-4 { margin-top: 1.5rem; }
+
+.lead-intel {
+  color: var(--text-primary);
+  font-size: 1.4rem;
+  line-height: 1.4;
+  border-left: 4px solid var(--accent-secondary);
+  padding-left: 1.5rem;
 }
 
-.about-text strong {
-    color: var(--accent-primary);
-    font-weight: 600;
+/* ── Intel Stats ────────────────────────────────────── */
+.intel-stats {
+  padding: 3rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.5rem;
 }
 
-.education-cards {
-    display: flex;
-    flex-direction: column;
-    gap: 1.5rem;
+.stat-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px dashed var(--outline);
+  padding-bottom: 0.5rem;
 }
 
-.education-card {
-    padding: 2.5rem;
-    text-align: center;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+.stat-row:last-child {
+  border-bottom: none;
 }
 
-.education-card:hover {
-    transform: translateY(-10px) scale(1.02);
+.label {
+  color: var(--text-secondary);
 }
 
-.card-icon {
-    font-size: 3rem;
-    margin-bottom: 1rem;
-    filter: drop-shadow(0 0 20px rgba(244, 180, 164, 0.3));
+.stat-value {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--text-primary);
 }
 
-.education-card h3 {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-    color: var(--text-primary);
+.stat-value.highlight {
+  color: var(--accent-primary);
 }
 
-.education-card .degree {
-    color: var(--accent-secondary);
-    font-weight: 500;
-    font-size: 1rem;
+.stat-value.danger {
+  color: var(--accent-danger);
 }
 
-/* Responsive */
+/* ═══ RESPONSIVE ═════════════════════════════════════ */
 @media (max-width: 968px) {
-    .about-grid {
-        grid-template-columns: 1fr;
-        gap: 2rem;
-    }
-
-    .about-text {
-        padding: 2rem;
-    }
-
-    .education-cards {
-        grid-template-columns: 1fr;
-    }
+  .dossier-grid {
+    grid-template-columns: 1fr;
+  }
 }

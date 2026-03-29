@@ -3,116 +3,75 @@ import { useInView } from 'framer-motion';
 import { useRef } from 'react';
 import './Contact.css';
 
-const socialLinks = [
-    {
-        name: "GitHub",
-        username: "Laksh-Devloper",
-        url: "https://github.com/Laksh-Devloper",
-        icon: "💻",
-        color: "#CD8B76"
-    },
-    {
-        name: "LinkedIn",
-        username: "Lakshya Bhawsar",
-        url: "https://www.linkedin.com/in/lakshya-bhawsar",
-        icon: "💼",
-        color: "#F4B4A4"
-    },
-    {
-        name: "Instagram",
-        username: "@lakshh._.22",
-        url: "https://www.instagram.com/lakshh._.22/",
-        icon: "📸",
-        color: "#8D5B4C"
-    },
-    {
-        name: "Resume",
-        username: "View PDF",
-        url: "https://drive.google.com/file/d/1rat3f24Nprj8j1PSeoRL6DIKw27qA3Uo/view?usp=sharing",
-        icon: "📄",
-        color: "#F5E6D3",
-        download: false
-    }
+const commLinks = [
+    { name: "GITHUB_NETWORK", url: "https://github.com/Laksh-Devloper" },
+    { name: "LINKED_COMMS", url: "https://www.linkedin.com/in/lakshya-bhawsar" },
+    { name: "INSTA_RELAY", url: "https://www.instagram.com/lakshh._.22/" }
 ];
 
 export default function Contact() {
     const ref = useRef(null);
     const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-    const containerVariants = {
-        hidden: { opacity: 0 },
-        visible: {
-            opacity: 1,
-            transition: {
-                staggerChildren: 0.1,
-            },
-        },
-    };
-
-    const itemVariants = {
-        hidden: { opacity: 0, scale: 0.8 },
-        visible: {
-            opacity: 1,
-            scale: 1,
-            transition: {
-                duration: 0.5,
-                ease: [0.4, 0, 0.2, 1],
-            },
-        },
-    };
-
     return (
         <section className="contact" id="contact" ref={ref}>
             <div className="container">
-                <motion.div
-                    className="contact-content"
-                    variants={containerVariants}
-                    initial="hidden"
-                    animate={isInView ? "visible" : "hidden"}
-                >
-                    <motion.div className="section-header" variants={itemVariants}>
-                        <span className="section-tag">Let's Connect</span>
-                        <h2>Get In Touch</h2>
-                        <p className="section-subtitle">
-                            Let's build something that matters.
-                        </p>
-                    </motion.div>
-
-                    <div className="social-grid">
-                        {socialLinks.map((social) => (
-                            <motion.a
-                                key={social.name}
-                                href={social.url}
-                                className="social-card glass-card"
-                                variants={itemVariants}
-                                whileHover={{ y: -10, scale: 1.02 }}
-                                transition={{ duration: 0.3 }}
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                download={social.download}
-                            >
-                                <div className="social-icon" style={{ color: social.color }}>
-                                    {social.icon}
-                                </div>
-                                <h3 className="social-name">{social.name}</h3>
-                                <p className="social-username">{social.username}</p>
-                                <div className="social-arrow">→</div>
-                            </motion.a>
-                        ))}
+                <div className="comms-layout">
+                    
+                    <div className="sect-header">
+                        <span className="mono-text header-id">EXT_LINKS</span>
+                        <h2>COMMS // NETWORK</h2>
                     </div>
 
-                    <motion.div className="cta-section" variants={itemVariants}>
-                        <h3>Ready to collaborate?</h3>
-                        <div className="cta-buttons">
-                            <a href="mailto:lakshybhawsar1722@gmail.com" className="btn btn-primary">
-                                Contact Me
-                            </a>
-                            <a href="https://drive.google.com/file/d/1rat3f24Nprj8j1PSeoRL6DIKw27qA3Uo/view?usp=sharing" className="btn btn-secondary" target="_blank" rel="noopener noreferrer">
-                                View Resume
-                            </a>
-                        </div>
-                    </motion.div>
-                </motion.div>
+                    <div className="comms-grid">
+                        
+                        {/* Radio Transmission Form */}
+                        <motion.div 
+                            className="tactical-box radio-form"
+                            initial={{ opacity: 0, scale: 0.95 }}
+                            animate={isInView ? { opacity: 1, scale: 1 } : {}}
+                            transition={{ duration: 0.6, delay: 0.2 }}
+                        >
+                            <form action="mailto:lakshybhawsar1722@gmail.com" method="post" encType="text/plain">
+                                <div className="form-head mono-text">
+                                    &gt; SECURE_RADIO_FREQ: 140.85
+                                </div>
+                                <div className="input-row">
+                                    <textarea placeholder="ENTER COORDINATES OR MSG..." required rows="5"></textarea>
+                                </div>
+                                <button type="submit" className="btn-chamfer w-full mt-4">
+                                    SEND TRANSMISSION
+                                </button>
+                            </form>
+                        </motion.div>
+
+                        {/* Comm Relays */}
+                        <motion.div 
+                            className="relay-links"
+                            initial={{ opacity: 0, x: 50 }}
+                            animate={isInView ? { opacity: 1, x: 0 } : {}}
+                            transition={{ duration: 0.6, delay: 0.4 }}
+                        >
+                            <h3 className="mono-text sec-title">ESTABLISH UPLINK</h3>
+                            <ul className="social-relays">
+                                {commLinks.map((link) => (
+                                    <li key={link.name}>
+                                        <a href={link.url} target="_blank" rel="noopener noreferrer" className="tactical-box small-box">
+                                            {link.name}
+                                        </a>
+                                    </li>
+                                ))}
+                                <li>
+                                    <a href="https://drive.google.com/file/d/11gXlXevNjW98kkfaxbJ0evX7kJVaBE_r/view?usp=sharing" target="_blank" rel="noopener noreferrer" className="tactical-box small-box download-btn">
+                                        [ ACCESS_DOSSIER ]
+                                    </a>
+                                </li>
+                            </ul>
+                        </motion.div>
+
+                    </div>
+
+                </div>
             </div>
         </section>
     );
