@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { gsap, useGSAP, reduced, finePointer, startLenis } from './motion';
+import { gsap, ScrollTrigger, useGSAP, reduced, finePointer, startLenis } from './motion';
 import Intro from './components/Intro';
 import ProfileGate from './components/ProfileGate';
 import Nav from './components/Nav';
@@ -11,6 +11,7 @@ import Leadership from './components/Leadership';
 import Skills3D from './components/skills-3d/Skills3D';
 import Contact from './components/Contact';
 import DetailModal from './components/DetailModal';
+import Sakura from './components/Sakura';
 
 export default function App() {
   const [intro, setIntro] = useState(true);
@@ -18,6 +19,15 @@ export default function App() {
   const [active, setActive] = useState(null);
 
   useEffect(() => (profile ? startLenis() : undefined), [profile]);
+
+  // Fonts and lazy images change the page height after triggers are measured; re-measure once they settle.
+  useEffect(() => {
+    if (!profile) return;
+    const refresh = () => ScrollTrigger.refresh();
+    document.fonts?.ready.then(refresh);
+    window.addEventListener('load', refresh);
+    return () => window.removeEventListener('load', refresh);
+  }, [profile]);
 
   // Section headings: letters rise out of a mask as each one scrolls into view.
   useGSAP(() => {
@@ -28,6 +38,14 @@ export default function App() {
         scrollTrigger: { trigger: el, start: 'top 88%', once: true },
       });
     });
+    // Japanese kickers above each heading slide in like a manga caption.
+    gsap.utils.toArray('.kicker').forEach((el) => {
+      gsap.from(el, {
+        x: -40, opacity: 0, skewX: -20, duration: 0.9, ease: 'expo.out',
+        scrollTrigger: { trigger: el, start: 'top 90%', once: true },
+      });
+    });
+    gsap.to('.progress', { scaleX: 1, ease: 'none', scrollTrigger: { start: 0, end: 'max', scrub: 0.3 } });
   }, { dependencies: [profile] });
 
   // Magnetic buttons: one delegated listener covers every .btn, including ones mounted later.
@@ -48,10 +66,17 @@ export default function App() {
   }, [profile]);
 
   if (intro) return <Intro onDone={() => setIntro(false)} />;
-  if (!profile) return <ProfileGate onPick={(p) => { window.scrollTo(0, 0); setProfile(p); }} />;
+  if (!profile) return (
+    <>
+      <Sakura />
+      <ProfileGate onPick={(p) => { window.scrollTo(0, 0); setProfile(p); }} />
+    </>
+  );
 
   return (
     <>
+      <span className="progress" aria-hidden="true" />
+      <Sakura density={0.6} />
       <Nav profile={profile} onSwitch={() => setProfile(null)} />
       <main id="top">
         <Hero />

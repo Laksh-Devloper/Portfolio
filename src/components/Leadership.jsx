@@ -23,6 +23,7 @@ export default function Leadership() {
 
   return (
     <section className="leadership section" id="leadership" ref={root}>
+      <p className="kicker" lang="ja">活動 <span>Side quests</span></p>
       <h2 className="section-title"><Split text="Leadership and activities" /></h2>
       <ul className="lead-list">
         {leadership.map((l) => (

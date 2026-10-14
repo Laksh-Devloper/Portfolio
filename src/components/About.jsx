@@ -9,7 +9,7 @@ export default function About() {
   useGSAP(() => {
     if (reduced()) return;
     const st = { trigger: root.current, start: 'top 75%', once: true };
-    gsap.from('.about-copy > :not(h2)', { x: -60, opacity: 0, stagger: 0.08, duration: 1.1, ease: 'expo.out', scrollTrigger: st });
+    gsap.from('.about-copy > :not(h2, .kicker)', { x: -60, opacity: 0, stagger: 0.08, duration: 1.1, ease: 'expo.out', scrollTrigger: st });
     gsap.from('.stat', { x: 80, opacity: 0, stagger: 0.12, duration: 1.1, ease: 'expo.out', scrollTrigger: st });
     // Count-up: the numbers are the point, so they get the motion.
     gsap.utils.toArray('.stat-num b').forEach((el) => {
@@ -20,6 +20,7 @@ export default function About() {
   return (
     <section className="about section" id="about" ref={root}>
       <div className="about-copy">
+        <p className="kicker" lang="ja">自己紹介 <span>Who I am</span></p>
         <h2 className="section-title"><Split text="About" /></h2>
         <p className="about-text">{about.text}</p>
         <dl className="facts">

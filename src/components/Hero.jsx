@@ -12,12 +12,14 @@ export default function Hero() {
     if (reduced()) return;
     gsap.timeline({ defaults: { ease: 'expo.out' } })
       .from('.hero-title .ch', { yPercent: 120, rotate: 10, stagger: 0.035, duration: 1.2 }, 0.2)
-      .from('.hero-fade', { y: 24, opacity: 0, stagger: 0.1, duration: 1 }, 0.6);
+      .from('.hero-fade', { y: 24, opacity: 0, stagger: 0.1, duration: 1 }, 0.6)
+      .from('.hero-jp', { yPercent: -30, opacity: 0, letterSpacing: '1.2em', duration: 1.6 }, 0.4);
 
     // Scroll-out parallax: image drifts slower than the page, copy lifts and fades.
     const st = { trigger: root.current, start: 'top top', end: 'bottom top', scrub: true };
     gsap.to('.hero-media', { yPercent: 18, ease: 'none', scrollTrigger: st });
     gsap.to('.hero-copy', { yPercent: -30, opacity: 0, ease: 'none', scrollTrigger: st });
+    gsap.to('.hero-jp', { yPercent: 40, ease: 'none', scrollTrigger: st });
   }, { scope: root });
 
   return (
@@ -25,6 +27,7 @@ export default function Hero() {
       <div className="hero-media" aria-hidden="true">
         <SquareLensEffect imageSrc={me.heroImg} />
       </div>
+      <p className="hero-jp" lang="ja" aria-hidden="true">夢を見て、コードを書く。</p>
       <div className="hero-copy">
         <p className="hero-meta hero-fade">
           <span className="tag">{me.role}</span> <span>{me.now}</span> <span>{me.location}</span>

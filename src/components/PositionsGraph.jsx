@@ -93,7 +93,7 @@ export default function PositionsGraph() {
   return (
     <section className={reduce ? 'positions static' : 'positions'} id="experience" ref={root}>
       <div className="gp-stage">
-        <h2 className="gp-heading">Experience and education</h2>
+        <h2 className="gp-heading"><span className="kicker" lang="ja">経歴 <span>Story arc</span></span>Experience and education</h2>
         <svg className="gp-svg" viewBox="0 0 122 98" preserveAspectRatio="xMidYMid meet" aria-hidden="true">
           <defs>
             <pattern id="gp-grid" width="6" height="6" patternUnits="userSpaceOnUse">
@@ -122,7 +122,7 @@ export default function PositionsGraph() {
             seasons.map((s, k) => <div className="gp-card" key={s.title}><Card s={s} k={k} /></div>)
           ) : (
             <>
-              <ol className="gp-steps" aria-hidden="true">
+              <ol className="gp-steps" aria-hidden="true" style={{ gridTemplateColumns: `repeat(${seasons.length}, 1fr)` }}>
                 {seasons.map((s, k) => <li key={s.title} className={k <= active ? 'on' : ''} />)}
               </ol>
               <div className="gp-card" key={active}>

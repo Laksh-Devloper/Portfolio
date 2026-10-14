@@ -15,7 +15,11 @@ export default function Projects({ onOpen }) {
     const t = track.current;
     setEdge({ start: t.scrollLeft < 8, end: t.scrollLeft + t.clientWidth > t.scrollWidth - 8 });
   };
-  useEffect(update, []);
+  useEffect(() => {
+    update();
+    window.addEventListener('resize', update);
+    return () => window.removeEventListener('resize', update);
+  }, []);
 
   useGSAP(() => {
     if (reduced()) return;
@@ -87,6 +91,7 @@ export default function Projects({ onOpen }) {
 
   return (
     <section className="row section-flush" id="projects" ref={root}>
+      <p className="kicker" lang="ja">作品集 <span>Episodes so far</span></p>
       <h2 className="section-title"><Split text="Projects" /></h2>
       <div className="row-viewport">
         <button className="row-arrow left" onClick={() => page(-1)} hidden={edge.start} aria-label="Scroll left"><CaretLeft /></button>
