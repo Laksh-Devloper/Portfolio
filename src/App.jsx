@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { gsap, ScrollTrigger, useGSAP, reduced, finePointer, startLenis } from './motion';
+import { gsap, useGSAP, reduced, finePointer, startLenis } from './motion';
 import Intro from './components/Intro';
 import ProfileGate from './components/ProfileGate';
 import Nav from './components/Nav';
@@ -12,22 +12,16 @@ import Skills3D from './components/skills-3d/Skills3D';
 import Contact from './components/Contact';
 import DetailModal from './components/DetailModal';
 import Sakura from './components/Sakura';
+import MusicIsland from './components/MusicIsland';
 
 export default function App() {
-  const [intro, setIntro] = useState(true);
+  // 'playing' → intro alone; 'reveal' → profile gate mounts under the opening shutter; false → gone.
+  const [intro, setIntro] = useState('playing');
+  const [music, setMusic] = useState(false);
   const [profile, setProfile] = useState(null);
   const [active, setActive] = useState(null);
 
   useEffect(() => (profile ? startLenis() : undefined), [profile]);
-
-  // Fonts and lazy images change the page height after triggers are measured; re-measure once they settle.
-  useEffect(() => {
-    if (!profile) return;
-    const refresh = () => ScrollTrigger.refresh();
-    document.fonts?.ready.then(refresh);
-    window.addEventListener('load', refresh);
-    return () => window.removeEventListener('load', refresh);
-  }, [profile]);
 
   // Section headings: letters rise out of a mask as each one scrolls into view.
   useGSAP(() => {
@@ -38,14 +32,6 @@ export default function App() {
         scrollTrigger: { trigger: el, start: 'top 88%', once: true },
       });
     });
-    // Japanese kickers above each heading slide in like a manga caption.
-    gsap.utils.toArray('.kicker').forEach((el) => {
-      gsap.from(el, {
-        x: -40, opacity: 0, skewX: -20, duration: 0.9, ease: 'expo.out',
-        scrollTrigger: { trigger: el, start: 'top 90%', once: true },
-      });
-    });
-    gsap.to('.progress', { scaleX: 1, ease: 'none', scrollTrigger: { start: 0, end: 'max', scrub: 0.3 } });
   }, { dependencies: [profile] });
 
   // Magnetic buttons: one delegated listener covers every .btn, including ones mounted later.
@@ -65,18 +51,24 @@ export default function App() {
     return () => document.removeEventListener('pointermove', move);
   }, [profile]);
 
-  if (intro) return <Intro onDone={() => setIntro(false)} />;
+  const introEl = intro && (
+    <Intro
+      onReveal={(m) => { setMusic(m); setIntro('reveal'); }}
+      onDone={(m) => { setMusic(m); setIntro(false); }}
+    />
+  );
+  if (intro === 'playing') return introEl;
   if (!profile) return (
     <>
       <Sakura />
       <ProfileGate onPick={(p) => { window.scrollTo(0, 0); setProfile(p); }} />
+      {introEl}
     </>
   );
 
   return (
     <>
-      <span className="progress" aria-hidden="true" />
-      <Sakura density={0.6} />
+      <MusicIsland autoplay={music} />
       <Nav profile={profile} onSwitch={() => setProfile(null)} />
       <main id="top">
         <Hero />

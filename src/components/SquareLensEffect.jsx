@@ -80,7 +80,7 @@ void main() {
 
 /* ─── Fragment shader ─── */
 // Adapted: uses the same image for both inside and outside the square,
-// but shows a muted version outside the square and full color inside.
+// but shows grayscale outside the square and full color inside.
 
 const fragmentShader = /* glsl */ `
 precision highp float;
@@ -168,9 +168,9 @@ void main() {
   outsideUv += random3(vec3(outsideUv * u_randomFrequency, u_time * u_randomSpeed)).x * u_randomStrength;
 
   vec4 outsideSample = texture2D(u_texture1, outsideUv);
-  // Half-desaturated and dimmed, so the anime palette still reads outside the lens
+  // Grayscale conversion (luminance weights)
   float gray = dot(outsideSample.rgb, vec3(0.299, 0.587, 0.114));
-  vec4 outsideColor = vec4(mix(vec3(gray), outsideSample.rgb, 0.55) * 0.8, 1.0);
+  vec4 outsideColor = vec4(vec3(gray), 1.0);
 
   // Blend inside/outside based on square mask
   vec4 finalColor = mix(outsideColor, insideColor, squareMask);
@@ -193,21 +193,20 @@ export default function SquareLensEffect({ imageSrc }) {
     if (!canvas) return;
 
     let rafId = null;
-    const finePointer = window.matchMedia('(pointer: fine)').matches;
     let destroyed = false;
 
-    /* Shader params: gentler than the repo defaults so the illustration stays clean */
+    /* Shader params (matching the repo defaults) */
     const shaderParams = {
-      squareSize: 0.32,
-      lensDistortion: 0.8,
+      squareSize: 0.4,
+      lensDistortion: 1.5,
       rgbShiftR: 0.01,
       rgbShiftG: 0,
       rgbShiftB: -0.01,
       waveFrequency: 10,
-      waveStrength: 0.003,
+      waveStrength: 0.01,
       waveSpeed: 1,
       randomFrequency: 1,
-      randomStrength: 0.003,
+      randomStrength: 0.02,
       randomSpeed: 0.2,
       pointerEase: 0.1,
     };
@@ -288,11 +287,6 @@ export default function SquareLensEffect({ imageSrc }) {
       /* RAF loop */
       const tick = () => {
         if (destroyed) return;
-        // No cursor on touch screens: let the lens wander the sky instead of parking on the copy.
-        if (!finePointer) {
-          const t = performance.now() * 0.001;
-          mouse.set(0.35 + Math.sin(t * 0.35) * 0.35, 0.45 + Math.cos(t * 0.27) * 0.25);
-        }
         mouseEase.lerp(mouse, shaderParams.pointerEase);
         uniforms.u_mouse.value.copy(mouseEase);
         uniforms.u_time.value = performance.now() * 0.001;

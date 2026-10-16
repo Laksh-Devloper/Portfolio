@@ -15,9 +15,13 @@ export default function Nav({ profile, onSwitch }) {
   return (
     <header className="nav" ref={ref}>
       <a href="#top" className="logo">{me.logo}</a>
-      <nav aria-label="Primary">
+      {/* Links split around the centre, which belongs to the music island. */}
+      <nav aria-label="Primary" className="nav-split">
         <ul className="nav-links">
-          {links.map(([label, href]) => <li key={href}><a href={href}>{label}</a></li>)}
+          {links.slice(0, 4).map(([label, href]) => <li key={href}><a href={href}>{label}</a></li>)}
+        </ul>
+        <ul className="nav-links">
+          {links.slice(4).map(([label, href]) => <li key={href}><a href={href}>{label}</a></li>)}
         </ul>
       </nav>
       <button className="nav-profile" onClick={onSwitch} aria-label={`Switch profile, current: ${profile.label}`}>

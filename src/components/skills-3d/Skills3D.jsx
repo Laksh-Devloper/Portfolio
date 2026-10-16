@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { Renderer, Camera, Transform, Texture, Program, Mesh } from 'ogl';
-import { gsap, ScrollTrigger } from '../../motion';
+import { gsap } from '../../motion'; 
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { cylinderVertex, cylinderFragment, particleVertex, particleFragment } from './shaders';
 import { createCylinderGeometry, createParticleGeometry } from './utils';
 import Split from '../Split';
@@ -69,10 +70,6 @@ export default function Skills3D() {
 
   useEffect(() => {
     if (!canvasRef.current || !containerRef.current) return;
-    let disposed = false;
-    // StrictMode runs this effect twice; start each run from a clean particle list.
-    particlesRef.current = [];
-    const triggers = [];
 
     // We do NOT use ScrollSmoother here because `motion.js` already sets up Lenis.
     // Instead we just hook into standard ScrollTrigger.
@@ -86,7 +83,7 @@ export default function Skills3D() {
       antialias: true,
     });
     const gl = renderer.gl;
-    gl.clearColor(0.027, 0.016, 0.059, 1);
+    gl.clearColor(0, 0, 0, 1);
     gl.disable(gl.CULL_FACE);
 
     const getDimensions = () => {
@@ -137,7 +134,6 @@ export default function Skills3D() {
       img.crossOrigin = 'anonymous';
       img.src = tech.icon;
       img.onload = () => {
-        if (disposed) return;
         loadedCount++;
         if (loadedCount === numCards) {
           // All images loaded, draw the layout
@@ -147,17 +143,12 @@ export default function Skills3D() {
           topTech.forEach((t, i) => {
             const x = i * cardWidth;
             
-            // Card background: night-sky gradient with a sakura-pink rim, like an anime trading card
-            const g = ctx.createLinearGradient(x, 0, x, cardHeight);
-            g.addColorStop(0, i % 2 === 0 ? '#1a1033' : '#140c29');
-            g.addColorStop(1, i % 2 === 0 ? '#3a1442' : '#2a1038');
-            ctx.fillStyle = g;
+            // Draw card background
+            ctx.fillStyle = i % 2 === 0 ? '#111' : '#151515';
             ctx.fillRect(x, 0, cardWidth, cardHeight);
-            ctx.fillStyle = 'rgba(255,255,255,0.5)';
-            for (let s = 0; s < 18; s++) ctx.fillRect(x + ((s * 137) % cardWidth), (s * 251) % cardHeight, 3, 3);
 
             // Draw subtle border
-            ctx.strokeStyle = '#ff8fb8';
+            ctx.strokeStyle = '#333';
             ctx.lineWidth = 4;
             ctx.strokeRect(x, 0, cardWidth, cardHeight);
 
@@ -173,7 +164,7 @@ export default function Skills3D() {
             ctx.textAlign = 'center';
             ctx.fillText(t.name, x + cardWidth / 2, iy - 60);
 
-            ctx.fillStyle = '#ffb0c8';
+            ctx.fillStyle = '#888888';
             ctx.font = '32px sans-serif';
             ctx.fillText(t.desc, x + cardWidth / 2, iy - 10);
           });
@@ -237,7 +228,6 @@ export default function Skills3D() {
         },
       });
 
-      triggers.push(textTl);
       textTl
         .fromTo(textEl, { opacity: 0, y: 30 }, { opacity: 1, y: 0, duration: 0.2, ease: 'power2.out' })
         .to(textEl, { opacity: 1, duration: 0.6, ease: 'none' })
@@ -251,7 +241,7 @@ export default function Skills3D() {
         vertex: particleVertex,
         fragment: particleFragment,
         uniforms: {
-          uColor: { value: [1.0, 0.72, 0.82] },
+          uColor: { value: [1.0, 1.0, 1.0] },
           uOpacity: { value: 0.0 },
         },
         transparent: true,
@@ -319,23 +309,18 @@ export default function Skills3D() {
       renderer.render({ scene, camera });
     };
     animate();
-    // This effect runs after the useGSAP sections above, so recalculate every trigger's position.
-    ScrollTrigger.refresh();
 
     return () => {
       window.removeEventListener('resize', handleResize);
       cancelAnimationFrame(rafId);
-      disposed = true;
-      tl.scrollTrigger?.kill();
       tl.kill();
-      triggers.forEach((t) => { t.scrollTrigger?.kill(); t.kill(); });
       // Avoid loseContext on the canvas because React StrictMode will reuse the same DOM node 
       // and WebGL context cannot be recreated on it once lost.
     };
   }, []);
 
   return (
-    <section id="skills" style={{ position: 'relative', backgroundColor: '#07040f', height: '500vh' }} ref={containerRef}>
+    <section id="skills" style={{ position: 'relative', backgroundColor: '#000', height: '500vh' }} ref={containerRef}>
       <div style={{ position: 'sticky', top: 0, width: '100%', height: '100vh', overflow: 'hidden' }}>
         <canvas ref={canvasRef} style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', display: 'block' }} />
         

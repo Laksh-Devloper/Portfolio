@@ -15,11 +15,7 @@ export default function Projects({ onOpen }) {
     const t = track.current;
     setEdge({ start: t.scrollLeft < 8, end: t.scrollLeft + t.clientWidth > t.scrollWidth - 8 });
   };
-  useEffect(() => {
-    update();
-    window.addEventListener('resize', update);
-    return () => window.removeEventListener('resize', update);
-  }, []);
+  useEffect(update, []);
 
   useGSAP(() => {
     if (reduced()) return;
@@ -91,7 +87,6 @@ export default function Projects({ onOpen }) {
 
   return (
     <section className="row section-flush" id="projects" ref={root}>
-      <p className="kicker" lang="ja">作品集 <span>Episodes so far</span></p>
       <h2 className="section-title"><Split text="Projects" /></h2>
       <div className="row-viewport">
         <button className="row-arrow left" onClick={() => page(-1)} hidden={edge.start} aria-label="Scroll left"><CaretLeft /></button>
@@ -101,7 +96,7 @@ export default function Projects({ onOpen }) {
               <button className="card" onClick={() => onOpen(p)} aria-label={`${p.title}. Open project details`}>
                 <span className="card-spot" aria-hidden="true" />
                 <span className="card-media">
-                  <img src={p.img} alt="" loading="lazy" width="960" height="540" />
+                  <img src={p.img} alt="" loading="lazy" width="1200" height="600" />
                   <span className="card-play" aria-hidden="true"><Play weight="fill" /></span>
                 </span>
                 <span className="card-body">
@@ -118,7 +113,7 @@ export default function Projects({ onOpen }) {
       </div>
       {createPortal(
         <div className="cursor-preview" ref={preview} aria-hidden="true">
-          {projects.map((p) => <img key={p.id} src={p.hover} alt="" width="640" height="480" />)}
+          {projects.map((p) => <img key={p.id} src={p.hover} alt="" width="1200" height="600" />)}
         </div>,
         document.body,
       )}

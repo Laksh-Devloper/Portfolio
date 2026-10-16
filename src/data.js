@@ -1,13 +1,14 @@
 
 /**
  * Portfolio content for laksh-portfolio.onrender.com
- * Artwork is original anime-style SVG generated in anime.js.
+ * Images are Picsum placeholders until real screenshots are available.
  * Personality: technically competent, mildly unhinged, allergic to fluff.
  */
 
-import { heroScene, avatar, projectArt } from './anime';
+import { avatar } from './anime';
 
-let episode = 0;
+const pic = (seed, w = 960, h = 540) =>
+  `https://picsum.photos/seed/${seed}/${w}/${h}`;
 
 export const me = {
   name: 'Lakshya Bhawsar',
@@ -20,7 +21,7 @@ export const me = {
   now: 'GenAI/ML Engineer at bluCursor Infotech',
   location: 'Indore, India',
 
-  heroImg: heroScene(),
+  heroImg: pic('laksh-hero-desk', 1920, 1080),
 
   email: 'lakshybhawsar1722@gmail.com',
 
@@ -82,9 +83,10 @@ const project = (
   stack,
   repo,
 
-  img: projectArt(id, episode + 1),
-  hover: projectArt(id, episode + 1, 640, 480),
-  wide: projectArt(id, ++episode, 1920, 1080),
+  // GitHub's social preview card for the repo, saved in public/projects.
+  img: `/projects/${id}.png`,
+  hover: `/projects/${id}.png`,
+  wide: `/projects/${id}.png`,
 });
 
 export const projects = [

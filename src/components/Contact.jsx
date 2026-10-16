@@ -20,7 +20,7 @@ export default function Contact() {
       xPercent: -35, ease: 'none',
       scrollTrigger: { trigger: root.current, start: 'top bottom', end: 'bottom top', scrub: true },
     });
-    gsap.from('.contact-inner > :not(.kicker)', {
+    gsap.from('.contact-inner > *', {
       y: 50, opacity: 0, stagger: 0.1, duration: 1.1, ease: 'expo.out',
       scrollTrigger: { trigger: root.current, start: 'top 70%', once: true },
     });
@@ -31,7 +31,6 @@ export default function Contact() {
       <section className="contact" id="contact" ref={root}>
         <span className="contact-ghost" aria-hidden="true">Still watching</span>
         <div className="contact-inner">
-          <p className="kicker" lang="ja">次回予告 <span>Next episode</span></p>
           <h2><Split text="Still watching?" /></h2>
           <p>Open to AI and full-stack roles. Drop me an email and I'll get back to you.</p>
           <a className="btn btn-primary btn-lg" href={`mailto:${me.email}`}>Get in touch <ArrowUpRight weight="bold" /></a>

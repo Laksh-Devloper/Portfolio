@@ -52,5 +52,25 @@ export function playIdent() {
     o.stop(swellAt + 2);
   });
 
-  setTimeout(() => ctx.close(), 5000);
+  // Whoosh: filtered noise sweeping up into the flare, then a low sub hit as the shutter opens.
+  const whooshAt = t0 + 2.9;
+  const noise = ctx.createBuffer(1, ctx.sampleRate * 1.2, ctx.sampleRate);
+  const ch = noise.getChannelData(0);
+  for (let k = 0; k < ch.length; k++) ch[k] = Math.random() * 2 - 1;
+  const src = ctx.createBufferSource();
+  src.buffer = noise;
+  const bp = ctx.createBiquadFilter();
+  bp.type = 'bandpass';
+  bp.Q.value = 1.2;
+  bp.frequency.setValueAtTime(300, whooshAt);
+  bp.frequency.exponentialRampToValueAtTime(5000, whooshAt + 0.75);
+  const wg = ctx.createGain();
+  wg.gain.setValueAtTime(0.0001, whooshAt);
+  wg.gain.exponentialRampToValueAtTime(0.35, whooshAt + 0.7);
+  wg.gain.exponentialRampToValueAtTime(0.0001, whooshAt + 1.1);
+  src.connect(bp).connect(wg).connect(out);
+  src.start(whooshAt);
+  hit(t0 + 3.62, 38, 1.6, 0.8);
+
+  setTimeout(() => ctx.close(), 6500);
 }
